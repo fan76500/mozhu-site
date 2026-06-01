@@ -1,0 +1,33 @@
+---
+title: "E-Commerce Platform"
+summary: "功能完整的电商解决方案，包含前后端和支付系统集成。"
+date: 2024-03-20
+tags: ["Next.js", "Node.js", "PostgreSQL", "Stripe", "TypeScript"]
+coverImage: "https://placehold.co/800x500/18181b/6366f1?text=E-Commerce"
+githubUrl: "https://github.com/username/ecommerce"
+liveUrl: "https://shop.demo.com"
+featured: true
+---
+
+## 项目概述
+
+这是一个功能完整的电商平台，提供从浏览到支付的全流程购物体验。
+
+## 核心功能
+
+- 用户认证与权限管理
+- 商品分类与搜索
+- 购物车管理
+- 订单处理系统
+- Stripe 支付集成
+
+## 技术亮点
+
+使用 Next.js 14 的 App Router 构建，采用 Server Components 提升性能。
+
+```typescript
+export default async function ProductPage({ params }: { params: { id: string } }) {
+  const product = await getProduct(params.id);
+  return <ProductDetail product={product} />;
+}
+```

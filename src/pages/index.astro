@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ui/ProjectCard.astro';
+import BlogCard from '../components/ui/BlogCard.astro';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter((project) => project.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const latestPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+<Layout title="首页">
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 via-transparent to-accent-indigo/5"></div>
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-indigo/10 rounded-full blur-3xl"></div>
+    
+    <div class="container-custom relative z-10">
+      <div class="flex flex-col lg:flex-row items-center gap-12 py-20">
+        <div class="flex-1 text-center lg:text-left">
+          <p class="text-accent-cyan text-sm font-medium tracking-wider uppercase mb-4 animate-fade-in">
+            欢迎来到我的世界
+          </p>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-6 animate-fade-in stagger-1">
+            你好，我是
+            <span class="heading-gradient">开发者</span>
+          </h1>
+          
+          <p class="text-xl sm:text-2xl text-text-secondary leading-relaxed mb-8 animate-fade-in stagger-2">
+            专注于现代 Web 开发，
+            <br class="hidden sm:block" />
+            用代码创造美好的数字体验。
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in stagger-3">
+            <a href="/work" class="btn-primary">
+              <span>查看作品</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+            <a href="/blog" class="btn-secondary">
+              读博客
+            </a>
+          </div>
+        </div>
+        
+        <div class="flex-shrink-0 animate-fade-in stagger-4">
+          <div class="relative">
+            <div class="absolute -inset-4 bg-gradient-to-r from-accent-cyan to-accent-indigo rounded-full opacity-20 blur-xl"></div>
+            <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-border">
+              <img
+                src="https://placehold.co/320x320/18181b/00d9ff?text=Avatar"
+                alt="开发者头像"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20">
+    <div class="container-custom">
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-bold text-text-primary mb-2">精选作品</h2>
+          <p class="text-text-secondary">展示我最得意的项目</p>
+        </div>
+        <a href="/work" class="btn-secondary text-sm">
+          查看全部
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredProjects.map((project) => (
+          <ProjectCard
+            href={`/work/${project.slug}`}
+            title={project.data.title}
+            description={project.data.summary}
+            tags={project.data.tags}
+            coverImage={project.data.coverImage}
+            slug={project.slug}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-card-bg/50">
+    <div class="container-custom">
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-bold text-text-primary mb-2">最新博客</h2>
+          <p class="text-text-secondary">分享技术与见解</p>
+        </div>
+        <a href="/blog" class="btn-secondary text-sm">
+          阅读更多
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {latestPosts.map((post) => (
+          <BlogCard
+            href={`/blog/${post.slug}`}
+            title={post.data.title}
+            description={post.data.summary}
+            publishDate={post.data.date}
+            tags={post.data.tags}
+            slug={post.slug}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20">
+    <div class="container-custom">
+      <div class="card text-center max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold text-text-primary mb-4">
+          准备好开始合作了吗？
+        </h2>
+        <p class="text-text-secondary mb-8">
+          无论是项目咨询还是技术交流，我都很乐意与你交流。
+        </p>
+        <a href="mailto:hello@example.com" class="btn-primary">
+          联系我
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

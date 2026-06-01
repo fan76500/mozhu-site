@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/ui/BlogCard.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+---
+
+<Layout title="博客" description="阅读我的技术博客和文章">
+  <section class="py-20">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
+          我的<span class="heading-gradient">博客</span>
+        </h1>
+        <p class="text-text-secondary text-lg max-w-2xl mx-auto">
+          分享技术见解、教程和开发心得，记录成长历程。
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-2 justify-center mb-12">
+        <button
+          class="tag-filter px-4 py-2 text-sm font-medium rounded-full bg-accent-indigo text-white transition-all"
+          data-tag="all"
+        >
+          全部
+        </button>
+        {allTags.map((tag) => (
+          <button
+            class="tag-filter px-4 py-2 text-sm font-medium rounded-full bg-card-bg border border-border text-text-secondary hover:border-accent-indigo hover:text-accent-indigo transition-all"
+            data-tag={tag}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <div class="post-item" data-tags={JSON.stringify(post.data.tags)}>
+            <BlogCard
+              href={`/blog/${post.slug}`}
+              title={post.data.title}
+              description={post.data.summary}
+              publishDate={post.data.date}
+              tags={post.data.tags}
+              slug={post.slug}
+            />
+          </div>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-text-secondary">暂无文章，敬请期待...</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll('.tag-filter');
+  const postItems = document.querySelectorAll('.post-item');
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.getAttribute('data-tag');
+      
+      filterButtons.forEach((btn) => {
+        btn.classList.remove('bg-accent-indigo', 'text-white');
+        btn.classList.add('bg-card-bg', 'border', 'border-border', 'text-text-secondary');
+      });
+      
+      button.classList.remove('bg-card-bg', 'border', 'border-border', 'text-text-secondary');
+      button.classList.add('bg-accent-indigo', 'text-white');
+      
+      postItems.forEach((item) => {
+        const tags = JSON.parse(item.getAttribute('data-tags') || '[]');
+        if (tag === 'all' || tags.includes(tag)) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

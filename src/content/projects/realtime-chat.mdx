@@ -1,0 +1,43 @@
+---
+title: "Real-time Chat App"
+summary: "基于 WebSocket 的实时聊天应用，支持私聊和群组功能。"
+date: 2024-05-10
+tags: ["Vue.js", "Socket.io", "Node.js", "MongoDB", "Redis"]
+coverImage: "https://placehold.co/800x500/18181b/00d9ff?text=Chat+App"
+githubUrl: "https://github.com/username/chat-app"
+liveUrl: "https://chat.demo.com"
+featured: true
+---
+
+## 项目概述
+
+一个现代化的即时通讯应用，提供流畅的实时聊天体验。
+
+## 核心功能
+
+- 实时消息推送
+- 群聊管理
+- 文件与图片分享
+- 消息已读/未读状态
+- 在线状态显示
+
+## 技术实现
+
+使用 Socket.io 实现 WebSocket 双向通信，Redis 用于消息缓存。
+
+```javascript
+io.on('connection', (socket) => {
+  socket.on('join-room', (roomId) => {
+    socket.join(roomId);
+    io.to(roomId).emit('user-joined', socket.id);
+  });
+
+  socket.on('send-message', ({ roomId, message }) => {
+    io.to(roomId).emit('receive-message', {
+      id: Date.now(),
+      text: message,
+      sender: socket.id,
+    });
+  });
+});
+```

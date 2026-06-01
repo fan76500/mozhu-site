@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ui/ProjectCard.astro';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Layout title="作品集" description="查看我的所有项目和作品">
+  <section class="py-20">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-bold text-text-primary mb-4">
+          我的<span class="heading-gradient">作品集</span>
+        </h1>
+        <p class="text-text-secondary text-lg max-w-2xl mx-auto">
+          这里展示了我参与和完成的各种项目，涵盖 Web 开发、移动应用、数据可视化等领域。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <ProjectCard
+            href={`/work/${project.slug}`}
+            title={project.data.title}
+            description={project.data.summary}
+            tags={project.data.tags}
+            coverImage={project.data.coverImage}
+            slug={project.slug}
+          />
+        ))}
+      </div>
+
+      {projects.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-text-secondary">暂无项目，敬请期待...</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

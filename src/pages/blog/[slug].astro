@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Tag from '../../components/ui/Tag.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+
+const formattedDate = post.data.date.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.summary}
+  ogType="article"
+  articleDate={post.data.date.toISOString()}
+  articleTags={post.data.tags}
+  canonicalURL={`/blog/${post.slug}`}
+>
+  <article class="py-20">
+    <div class="container-custom max-w-4xl">
+      <header class="mb-12">
+        <a
+          href="/blog"
+          class="inline-flex items-center text-text-secondary text-sm hover:text-accent-cyan transition-colors mb-8"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+          返回博客
+        </a>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-6">
+          {post.data.title}
+        </h1>
+
+        <div class="flex flex-wrap gap-2 mb-6">
+          {post.data.tags.map((tag) => (
+            <Tag name={tag} variant="indigo" />
+          ))}
+        </div>
+
+        <div class="flex items-center gap-4 text-text-secondary text-sm">
+          <time datetime={post.data.date.toISOString()}>
+            {formattedDate}
+          </time>
+        </div>
+      </header>
+
+      <div class="prose prose-invert prose-lg max-w-none
+                  prose-headings:text-text-primary
+                  prose-p:text-text-secondary
+                  prose-a:text-accent-cyan prose-a:no-underline hover:prose-a:underline
+                  prose-code:text-accent-indigo prose-code:bg-card-bg prose-code:px-2 prose-code:py-1 prose-code:rounded
+                  prose-pre:bg-card-bg prose-pre:border prose-pre:border-border
+                  prose-li:text-text-secondary
+                  prose-strong:text-text-primary
+                  prose-h2:scroll-mt-20
+                  prose-h3:scroll-mt-20
+                  prose-h4:scroll-mt-20">
+        <Content />
+      </div>
+
+      {headings.length > 2 && (
+        <aside class="mt-16 p-6 bg-card-bg rounded-xl border border-border">
+          <h3 class="text-lg font-semibold text-text-primary mb-4">目录</h3>
+          <nav class="space-y-2">
+            {headings
+              .filter((h) => h.depth <= 3)
+              .map((heading) => (
+                <a
+                  href={`#${heading.slug}`}
+                  class={`block text-sm text-text-secondary hover:text-accent-cyan transition-colors ${
+                    heading.depth === 2 ? '' : heading.depth === 3 ? 'ml-4' : ''
+                  }`}
+                >
+                  {heading.text}
+                </a>
+              ))}
+          </nav>
+        </aside>
+      )}
+
+      <footer class="mt-16 pt-8 border-t border-border">
+        <div class="flex items-center justify-between text-sm text-text-secondary">
+          <a
+            href="/blog"
+            class="hover:text-accent-cyan transition-colors"
+          >
+            ← 返回博客
+          </a>
+          <a
+            href="mailto:hello@example.com"
+            class="hover:text-accent-cyan transition-colors"
+          >
+            有问题？联系我
+          </a>
+        </div>
+      </footer>
+    </div>
+  </article>
+</Layout>

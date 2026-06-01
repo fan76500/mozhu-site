@@ -1,0 +1,40 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  publishDate: Date;
+  tags: string[];
+  slug: string;
+}
+
+const { href, title, description, publishDate, tags, slug } = Astro.props;
+
+const formattedDate = publishDate.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<a href={href} class="group card block">
+  <div class="flex flex-wrap gap-2 mb-3">
+    {tags.slice(0, 3).map((tag) => (
+      <span class="px-2 py-1 text-xs font-medium bg-accent-indigo/10 text-accent-indigo rounded">
+        {tag}
+      </span>
+    ))}
+  </div>
+  
+  <h3 class="text-lg font-semibold text-text-primary mb-2 group-hover:text-accent-cyan transition-colors">
+    {title}
+  </h3>
+  
+  <p class="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-2">
+    {description}
+  </p>
+  
+  <time datetime={publishDate.toISOString()} class="text-xs text-text-secondary">
+    {formattedDate}
+  </time>
+</a>
