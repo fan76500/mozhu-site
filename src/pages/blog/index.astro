@@ -46,7 +46,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
             <BlogCard
               href={`/blog/${post.slug}`}
               title={post.data.title}
-              description={post.data.summary}
+              description={post.data.description}
               publishDate={post.data.date}
               tags={post.data.tags}
               slug={post.slug}

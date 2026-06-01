@@ -13,7 +13,7 @@ export async function GET(context) {
     site: context.site,
     items: sorted.map((post) => ({
       title: post.data.title,
-      description: post.data.summary,
+      description: post.data.description,
       pubDate: post.data.date,
       link: `/blog/${post.slug}`,
       categories: post.data.tags,

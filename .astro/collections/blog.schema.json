@@ -23,7 +23,7 @@
             }
           ]
         },
-        "summary": {
+        "description": {
           "type": "string"
         },
         "tags": {
@@ -43,7 +43,7 @@
       "required": [
         "title",
         "date",
-        "summary",
+        "description",
         "tags"
       ],
       "additionalProperties": false

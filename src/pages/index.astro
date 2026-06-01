@@ -26,18 +26,18 @@ const latestPosts = allPosts
       <div class="flex flex-col lg:flex-row items-center gap-12 py-20">
         <div class="flex-1 text-center lg:text-left">
           <p class="text-accent-cyan text-sm font-medium tracking-wider uppercase mb-4 animate-fade-in">
-            欢迎来到我的世界
+            用 AI 搭建世界，顺便把自己也搭进去。
           </p>
-          
+
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary mb-6 animate-fade-in stagger-1">
             你好，我是
-            <span class="heading-gradient">开发者</span>
+            <span class="heading-gradient">你的名字</span>
           </h1>
-          
+
           <p class="text-xl sm:text-2xl text-text-secondary leading-relaxed mb-8 animate-fade-in stagger-2">
-            专注于现代 Web 开发，
+            大一学生，主学 AI，
             <br class="hidden sm:block" />
-            用代码创造美好的数字体验。
+            爱折腾，正在向全栈方向学习。
           </p>
           
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in stagger-3">
@@ -59,8 +59,8 @@ const latestPosts = allPosts
             <div class="absolute -inset-4 bg-gradient-to-r from-accent-cyan to-accent-indigo rounded-full opacity-20 blur-xl"></div>
             <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-border">
               <img
-                src="https://placehold.co/320x320/18181b/00d9ff?text=Avatar"
-                alt="开发者头像"
+                src="<!-- TODO: 替换为你的头像图片路径 -->"
+                alt="头像"
                 class="w-full h-full object-cover"
               />
             </div>
@@ -114,7 +114,7 @@ const latestPosts = allPosts
           <BlogCard
             href={`/blog/${post.slug}`}
             title={post.data.title}
-            description={post.data.summary}
+            description={post.data.description}
             publishDate={post.data.date}
             tags={post.data.tags}
             slug={post.slug}
@@ -128,12 +128,12 @@ const latestPosts = allPosts
     <div class="container-custom">
       <div class="card text-center max-w-3xl mx-auto">
         <h2 class="text-2xl sm:text-3xl font-bold text-text-primary mb-4">
-          准备好开始合作了吗？
+          <!-- TODO: CTA 标题 -->
         </h2>
         <p class="text-text-secondary mb-8">
-          无论是项目咨询还是技术交流，我都很乐意与你交流。
+          <!-- TODO: CTA 描述 -->
         </p>
-        <a href="mailto:hello@example.com" class="btn-primary">
+        <a href="mailto:<!-- TODO: 你的邮箱 -->" class="btn-primary">
           联系我
         </a>
       </div>
