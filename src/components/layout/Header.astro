@@ -13,7 +13,7 @@ const pathname = Astro.url.pathname;
   <nav class="container-custom">
     <div class="flex items-center justify-between h-16">
       <a href="/" class="text-xl font-bold heading-gradient">
-        Dev<span class="text-text-primary">Portfolio</span>
+        墨林<span class="text-text-primary">的小屋</span>
       </a>
 
       <div class="hidden md:flex items-center gap-8">
@@ -35,17 +35,22 @@ const pathname = Astro.url.pathname;
         id="mobile-menu-btn"
         class="md:hidden p-2 text-text-secondary hover:text-text-primary transition-colors"
         aria-label="打开菜单"
+        aria-expanded="false"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg id="menu-icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
 
     <div id="mobile-menu" class="hidden md:hidden pb-4">
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4" id="mobile-menu-links">
         {navItems.map((item) => (
           <a
             href={item.href}
@@ -66,8 +71,47 @@ const pathname = Astro.url.pathname;
 <script>
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+  const menuLinks = document.getElementById('mobile-menu-links');
+
+  function openMenu() {
+    mobileMenu?.classList.remove('hidden');
+    menuIconOpen?.classList.add('hidden');
+    menuIconClose?.classList.remove('hidden');
+    menuBtn?.setAttribute('aria-expanded', 'true');
+    menuBtn?.setAttribute('aria-label', '关闭菜单');
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.add('hidden');
+    menuIconOpen?.classList.remove('hidden');
+    menuIconClose?.classList.add('hidden');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    menuBtn?.setAttribute('aria-label', '打开菜单');
+  }
 
   menuBtn?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+    if (mobileMenu?.classList.contains('hidden')) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
+
+  // 点击菜单内链接后自动关闭
+  menuLinks?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  // 点击菜单外区域自动关闭
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu?.classList.contains('hidden') &&
+        !menuBtn?.contains(e.target) &&
+        !mobileMenu?.contains(e.target)) {
+      closeMenu();
+    }
   });
 </script>

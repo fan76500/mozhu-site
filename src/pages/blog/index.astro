@@ -42,7 +42,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
 
       <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <div class="post-item" data-tags={JSON.stringify(post.data.tags)}>
+          <div class="post-item transition-all duration-300 ease-in-out" data-tags={JSON.stringify(post.data.tags)}>
             <BlogCard
               href={`/blog/${post.slug}`}
               title={post.data.title}
@@ -83,9 +83,18 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
       postItems.forEach((item) => {
         const tags = JSON.parse(item.getAttribute('data-tags') || '[]');
         if (tag === 'all' || tags.includes(tag)) {
-          item.classList.remove('hidden');
+          item.style.opacity = '1';
+          item.style.transform = 'scale(1)';
+          item.style.maxHeight = '500px';
+          item.style.marginBottom = '';
+          item.style.pointerEvents = 'auto';
         } else {
-          item.classList.add('hidden');
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.95)';
+          item.style.maxHeight = '0';
+          item.style.marginBottom = '0';
+          item.style.pointerEvents = 'none';
+          item.style.overflow = 'hidden';
         }
       });
     });

@@ -1,9 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const skills: { category: string; items: string[] }[] = [];
+const skills: { category: string; items: string[] }[] = [
+  {
+    category: 'AI 工具',
+    items: ['Claude', 'Trae', 'DeepSeek', 'AI 辅助开发'],
+  },
+  {
+    category: '前端开发',
+    items: ['React', 'Tailwind CSS', 'HTML/CSS', 'JavaScript', 'TypeScript'],
+  },
+  {
+    category: '数据可视化',
+    items: ['Three.js', 'WebGL'],
+  },
+  {
+    category: '其他',
+    items: ['知识图谱', 'Neo4j', 'Git', 'Astro'],
+  },
+];
 
-const timeline: { year: string; title: string; company: string; description: string }[] = [];
+const timeline: { year: string; title: string; company: string; description: string }[] = [
+  {
+    year: '2026',
+    title: '树懒日历 Sloth Calendar',
+    company: '个人项目',
+    description: '一只慢吞吞的树懒桌宠，帮你管理日历和时间。用 React + Tailwind CSS 构建，AI 辅助开发。',
+  },
+  {
+    year: '2026',
+    title: '知识图谱宇宙',
+    company: '黑客松项目',
+    description: '把大学课本变成宇宙：知识点是小星球，连接是引力。用 Three.js + Neo4j 构建 3D 知识图谱。',
+  },
+];
 ---
 
 <Layout title="关于我" description="了解我的背景、技能和经验">
@@ -20,12 +50,8 @@ const timeline: { year: string; title: string; company: string; description: str
           <div class="sticky top-24">
             <div class="relative">
               <div class="absolute -inset-4 bg-gradient-to-r from-accent-cyan to-accent-indigo rounded-2xl opacity-20 blur-xl"></div>
-              <div class="relative rounded-2xl overflow-hidden border-2 border-border">
-                <img
-                  src="<!-- TODO: 替换为你的照片路径 -->"
-                  alt="个人照片"
-                  class="w-full"
-                />
+              <div class="relative rounded-2xl border-2 border-border flex items-center justify-center aspect-square bg-card-bg">
+                <span class="text-8xl font-bold heading-gradient">墨</span>
               </div>
             </div>
           </div>
@@ -121,14 +147,11 @@ const timeline: { year: string; title: string; company: string; description: str
             对我的作品感兴趣或有合作意向？期待与你的交流！
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:<!-- TODO: 你的邮箱 -->" class="btn-primary">
+            <a href="mailto:3206179763@qq.com" class="btn-primary">
               发送邮件
             </a>
-            <a href="https://github.com/<!-- TODO: 你的GitHub用户名 -->" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            <a href="https://github.com/fan76500" target="_blank" rel="noopener noreferrer" class="btn-secondary">
               GitHub
-            </a>
-            <a href="https://linkedin.com/in/<!-- TODO: 你的LinkedIn用户名 -->" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-              LinkedIn
             </a>
           </div>
         </div>

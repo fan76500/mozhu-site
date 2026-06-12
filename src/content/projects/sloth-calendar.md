@@ -3,9 +3,7 @@ title: "树懒日历 Sloth Calendar"
 date: 2026-05-20
 summary: "一只慢吞吞的树懒桌宠，帮你管理日历和时间。"
 tags: ["AI", "桌面应用", "Productivity"]
-coverImage: "/images/projects/sloth-calendar.png"
 githubUrl: "https://github.com/yourname/sloth-calendar"
-liveUrl: ""
 featured: true
 ---
 

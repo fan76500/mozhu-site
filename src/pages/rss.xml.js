@@ -8,8 +8,8 @@ export async function GET(context) {
   );
 
   return rss({
-    title: 'DevPortfolio Blog',
-    description: '一个现代简约风格的个人作品集和博客网站',
+    title: '墨林的小屋',
+    description: '墨林的个人博客 — 用 AI 搭建世界，分享技术与成长',
     site: context.site,
     items: sorted.map((post) => ({
       title: post.data.title,

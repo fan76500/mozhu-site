@@ -3,9 +3,7 @@ title: "知识图谱宇宙"
 date: 2026-04-10
 summary: "把大学课本变成宇宙：知识点是小星球，连接是引力。"
 tags: ["AI", "Knowledge Graph", "Education", "Hackathon"]
-coverImage: "/images/projects/knowledge-universe.png"
 githubUrl: "https://github.com/yourname/knowledge-universe"
-liveUrl: ""
 featured: true
 ---
 

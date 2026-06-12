@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
+const { Content, headings } = await project.render();
 
 const allProjects = (await getCollection('projects'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -78,7 +78,7 @@ const formattedDate = project.data.date.toLocaleDateString('zh-CN', {
               GitHub
             </a>
           )}
-          {project.data.liveUrl && (
+          {project.data.liveUrl && project.data.liveUrl.trim() !== '' && (
             <a
               href={project.data.liveUrl}
               target="_blank"
@@ -116,6 +116,26 @@ const formattedDate = project.data.date.toLocaleDateString('zh-CN', {
                   prose-strong:text-text-primary">
         <Content />
       </div>
+
+      {headings.length > 2 && (
+        <aside class="mt-16 p-6 bg-card-bg rounded-xl border border-border">
+          <h3 class="text-lg font-semibold text-text-primary mb-4">目录</h3>
+          <nav class="space-y-2">
+            {headings
+              .filter((h) => h.depth <= 3)
+              .map((heading) => (
+                <a
+                  href={`#${heading.slug}`}
+                  class={`block text-sm text-text-secondary hover:text-accent-cyan transition-colors ${
+                    heading.depth === 2 ? '' : heading.depth === 3 ? 'ml-4' : ''
+                  }`}
+                >
+                  {heading.text}
+                </a>
+              ))}
+          </nav>
+        </aside>
+      )}
 
       <nav class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {prevProject && (

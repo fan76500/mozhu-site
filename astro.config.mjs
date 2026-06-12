@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://your-site.com',
+  site: 'https://mozhu-site.3206179763.workers.dev',
   integrations: [
     mdx(),
     sitemap(),
